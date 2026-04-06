@@ -1,0 +1,12 @@
+export { default as project } from "./project";
+export { default as service } from "./service";
+export { default as blogPost } from "./blogPost";
+export { default as caseStudy } from "./caseStudy";
+export { default as testimonial } from "./testimonial";
+export { default as experience } from "./experience";
+export { default as skill } from "./skill";
+export { default as category } from "./category";
+export { default as navigation } from "./navigation";
+export { default as footer } from "./footer";
+export { default as seoSettings } from "./seoSettings";
+export { default as globalSettings } from "./globalSettings";
