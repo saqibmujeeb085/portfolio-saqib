@@ -1,8 +1,8 @@
 import { SectionTitle, MagneticButton } from "@/components/ui";
-import { posts, projects, services } from "@/lib/mock-data";
 import Image from "next/image";
 import { Marquee } from "@/components/Marquee";
 import { HorizontalShowcase } from "@/components/HorizontalShowcase";
+import { getPosts, getProjects, getServices } from "@/lib/cms";
 
 function BaseSection({ id, title, children, dark = false }: { id: string; title: string; children?: React.ReactNode; dark?: boolean }) {
   return (
@@ -15,7 +15,9 @@ function BaseSection({ id, title, children, dark = false }: { id: string; title:
   );
 }
 
-export function HomeSections() {
+export async function HomeSections() {
+  const [services, projects, posts] = await Promise.all([getServices(), getProjects(), getPosts()]);
+
   return (
     <>
       <BaseSection id="hero" title="Awwwards-level digital experiences for brands that want to lead.">
@@ -30,7 +32,7 @@ export function HomeSections() {
       <BaseSection id="marketing-services" title="Digital Marketing Services"><p>Campaigns, lead generation funnels, and conversion optimization.</p></BaseSection>
       <BaseSection id="consultation" title="Consultation Section" dark><MagneticButton href="/consultation">Schedule a Strategy Call</MagneticButton></BaseSection>
       <BaseSection id="process" title="Process Section"><p>Discover → Strategize → Design → Build → Optimize.</p><div className="mt-8 overflow-hidden rounded-xl border border-white/10"><HorizontalShowcase /></div></BaseSection>
-      <BaseSection id="featured-portfolio" title="Featured Portfolio" dark><div className="grid gap-6 md:grid-cols-2">{projects.map(p=><article key={p.slug}><Image src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80" alt={p.title} width={700} height={500} className="mb-3 h-56 w-full rounded-xl object-cover"/><h3>{p.title}</h3></article>)}</div></BaseSection>
+      <BaseSection id="featured-portfolio" title="Featured Portfolio" dark><div className="grid gap-6 md:grid-cols-2">{projects.map(p=><article key={p.slug}><Image src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80" alt={p.title} width={700} height={500} loading="lazy" className="mb-3 h-56 w-full rounded-xl object-cover"/><h3>{p.title}</h3></article>)}</div></BaseSection>
       <BaseSection id="case-studies" title="Case Studies Preview"><p>Deep dives into strategy, challenges and measurable outcomes.</p></BaseSection>
       <BaseSection id="experience" title="Experience Timeline" dark><p>8+ years crafting digital products and growth engines.</p></BaseSection>
       <BaseSection id="skills" title="Skills & Tools"><p>Next.js, TypeScript, GSAP, Framer Motion, Sanity, SEO, CRO.</p></BaseSection>
